@@ -12,3 +12,5 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     %   - Updated EEG file with correct channel locations
     %
     % ---------------------------------------------------------------------
+    clc; clearvars -except set_file channels_file electrodes_file output_file;
+    
