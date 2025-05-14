@@ -41,3 +41,31 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     end
     fprintf('Electrode coordinates assigned.\n');
 
+    % REMOVE INVALID CHANNELS (X, Y, Z)
+    nan_idx = find(isnan([EEG.chanlocs.X]) | isnan([EEG.chanlocs.Y]) | isnan([EEG.chanlocs.Z]));
+    if ~isempty(nan_idx)
+        fprintf('Removing invalid channels (X, Y, Z)...\n');
+        EEG = pop_select(EEG, 'nochannel', nan_idx);
+    end
+    
+    % VISUALIZE ELECTRODE POSITIONS
+    figure;
+    topoplot([], EEG.chanlocs, 'style', 'blank', 'electrodes', 'labelpoint');
+    title('Electrode Positions');
+    fprintf('Electrode positions plotted.\n');
+
+    % SAVE UPDATED EEG FILE
+    fprintf('Saving updated EEG dataset as: %s\n', output_file);
+    EEG = pop_saveset(EEG, 'filename', output_file);
+    
+    fprintf('Process completed successfully!\n');
+end
+
+%{
+USAGE:
+
+assign_channel_locations('path_to_your_eeg\your_eeg.set', ...
+                         'path_to_your_eeg\channels.tsv', ...
+                         'path_to_your_eeg\electrodes.tsv', ...
+                         'path_to_your_eeg\updated_eeg.set');
+%}
