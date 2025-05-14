@@ -34,3 +34,10 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     electrodes = readtable(electrodes_file, 'FileType', 'text');
 
     % Assign X, Y, Z coordinates
+    for i = 1:height(electrodes)
+        EEG.chanlocs(i).X = electrodes.x(i);
+        EEG.chanlocs(i).Y = electrodes.y(i);
+        EEG.chanlocs(i).Z = electrodes.z(i);
+    end
+    fprintf('Electrode coordinates assigned.\n');
+
