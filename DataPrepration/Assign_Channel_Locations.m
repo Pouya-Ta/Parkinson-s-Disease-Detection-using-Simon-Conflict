@@ -14,3 +14,8 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     % ---------------------------------------------------------------------
     clc; clearvars -except set_file channels_file electrodes_file output_file;
     
+    % LOAD EEG DATASET
+    fprintf('Loading EEG dataset: %s\n', set_file);
+    EEG = pop_loadset('filename', set_file);
+    EEG = eeg_checkset(EEG);
+
