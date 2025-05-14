@@ -23,3 +23,14 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     fprintf('Loading channel labels from: %s\n', channels_file);
     channels = readtable(channels_file, 'FileType', 'text');
     
+    % Assign channel labels
+    for i = 1:height(channels)
+        EEG.chanlocs(i).labels = channels.name{i};
+    end
+    fprintf('Channel labels assigned.\n');
+
+    % LOAD ELECTRODE COORDINATES
+    fprintf('Loading electrode coordinates from: %s\n', electrodes_file);
+    electrodes = readtable(electrodes_file, 'FileType', 'text');
+
+    % Assign X, Y, Z coordinates
