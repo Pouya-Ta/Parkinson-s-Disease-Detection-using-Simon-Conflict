@@ -19,3 +19,7 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     EEG = pop_loadset('filename', set_file);
     EEG = eeg_checkset(EEG);
 
+    % LOAD CHANNEL LABELS
+    fprintf('Loading channel labels from: %s\n', channels_file);
+    channels = readtable(channels_file, 'FileType', 'text');
+    
