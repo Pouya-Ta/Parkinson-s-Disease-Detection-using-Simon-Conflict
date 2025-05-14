@@ -61,11 +61,7 @@ function assign_channel_locations(set_file, channels_file, electrodes_file, outp
     fprintf('Process completed successfully!\n');
 end
 
-%{
-USAGE:
-
 assign_channel_locations('path_to_your_eeg\your_eeg.set', ...
                          'path_to_your_eeg\channels.tsv', ...
                          'path_to_your_eeg\electrodes.tsv', ...
                          'path_to_your_eeg\updated_eeg.set');
-%}
