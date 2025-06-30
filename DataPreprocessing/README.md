@@ -1,6 +1,6 @@
 # Preprocessing Pipeline for Simon Conflict EEG Data
 
-This repository provides a fully automated preprocessing pipeline for EEG data collected during the Simon Conflict task, organized in [BIDS](https://bids.neuroimaging.io/) format (dataset: `ds003509_05`). The pipeline leverages [MNE-Python](https://mne.tools/) and related tools to standardize, filter, and clean raw EEG recordings, producing ready-to-analyze data and quality-control figures.
+This repository provides a fully automated preprocessing pipeline for EEG data collected during the Simon Conflict task, organized in [BIDS](https://bids.neuroimaging.io/) format (dataset: `ds003509`). The pipeline leverages [MNE-Python](https://mne.tools/) and related tools to standardize, filter, and clean raw EEG recordings, producing ready-to-analyze data and quality-control figures.
 
 ---
 
