@@ -12,11 +12,11 @@ from sklearn.metrics import (
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# === Load Data ===
+# Load Data
 X = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_selected_features.npy")
 y = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_labels.npy")
 
-# === Global Feature Selection + Scaling ===
+# Global Feature Selection + Scaling
 k_features = min(30, X.shape[1])
 selector = SelectKBest(score_func=f_classif, k=k_features)
 X_selected = selector.fit_transform(X, y)
@@ -24,7 +24,7 @@ X_selected = selector.fit_transform(X, y)
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_selected)
 
-# === Define Classifiers ===
+# Define Classifiers
 svm = SVC(kernel='rbf', C=10, gamma=0.1, class_weight='balanced', probability=True, random_state=42)
 nb = GaussianNB(var_smoothing=1e-9)
 
@@ -34,11 +34,11 @@ ensemble = VotingClassifier(
     weights=[2, 1]
 )
 
-# === CV Setup ===
+# CV Setup
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 results = {'acc': [], 'prec': [], 'rec': [], 'f1': [], 'spec': [], 'true': [], 'pred': []}
 
-# === Cross-validation Loop ===
+# Cross-validation Loop
 for fold, (train_idx, test_idx) in enumerate(cv.split(X_scaled, y), 1):
     print(f"\n=== Ensemble Fold {fold} ===")
 
@@ -70,7 +70,7 @@ for fold, (train_idx, test_idx) in enumerate(cv.split(X_scaled, y), 1):
     print(f"F1-score:   {f1:.4f}")
     print(f"Specificity: {spec:.4f}")
 
-# === Final Report ===
+# Final Report
 print("\n=== SVM + Naive Bayes Ensemble Summary ===")
 print(f"Mean Accuracy:   {np.mean(results['acc']):.4f} ± {np.std(results['acc']):.4f}")
 print(f"Mean Precision:  {np.mean(results['prec']):.4f}")
@@ -81,7 +81,7 @@ print(f"Mean Specificity: {np.mean(results['spec']):.4f}")
 print("\n=== Full Classification Report ===")
 print(classification_report(results['true'], results['pred'], zero_division=0))
 
-# === Confusion Matrix ===
+# Confusion Matrix
 plt.figure(figsize=(6, 5))
 sns.heatmap(confusion_matrix(results['true'], results['pred']), annot=True, fmt='d', cmap='Blues')
 plt.title("SVM + NB Ensemble Confusion Matrix")
