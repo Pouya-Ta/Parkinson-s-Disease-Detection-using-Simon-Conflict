@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load Data
-X = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_selected_features.npy")
-y = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_labels.npy")
+X = np.load(r"lstm_selected_features.npy") # Optimize this path and adjust it based on your own path for selected features after the hybrid EEGNet-LSTM models
+y = np.load(r"lstm_labels.npy") # Optimize this path and adjust it based on your own path for labels (as another input for the model)
 
 # Global Feature Selection + Scaling
 k_features = min(30, X.shape[1])
