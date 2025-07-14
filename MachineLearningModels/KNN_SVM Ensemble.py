@@ -10,8 +10,8 @@ from sklearn.feature_selection import SelectKBest, f_classif
 import numpy as np
 
 # Load data
-X = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_selected_features.npy")
-y = np.load(r"C:\Users\Pouya\Desktop\ICBME2025\PD SC\Data\lstm_labels.npy")
+X = np.load(r"lstm_selected_features.npy") # Optimize this path and adjust it based on your own path for selected features after the hybrid EEGNet-LSTM models
+y = np.load(r"lstm_labels.npy") # Optimize this path and adjust it based on your own path for labels (as another input for the model)
 
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
