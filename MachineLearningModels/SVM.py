@@ -48,3 +48,12 @@ print(grid.best_params_)
 
 print("\n=== Best Weighted F1-Score ===")
 print(grid.best_score_)
+
+# Evaluate on full data 
+y_pred = grid.predict(X)
+
+print("\n=== Classification Report (Full Data) ===")
+print(classification_report(y, y_pred))
+
+# Confusion Matrix
+ConfusionMatrixDisplay.from_predictions(y, y_pred, display_labels=["Healthy", "PD"])
