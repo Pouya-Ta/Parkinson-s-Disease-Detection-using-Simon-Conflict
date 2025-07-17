@@ -20,3 +20,9 @@ pipeline = Pipeline([
     ("scaler", StandardScaler()),
     ("svm", SVC(kernel="rbf", class_weight="balanced"))
 ])
+
+# Define hyperparameter grid
+param_grid = {
+    "svm__C": [0.1, 1, 10, 100],
+    "svm__gamma": [0.001, 0.01, 0.1, 1]
+}
