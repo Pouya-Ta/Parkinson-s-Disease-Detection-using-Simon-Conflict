@@ -26,3 +26,16 @@ param_grid = {
     "svm__C": [0.1, 1, 10, 100],
     "svm__gamma": [0.001, 0.01, 0.1, 1]
 }
+
+# Use StratifiedGroupKFold
+cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
+
+# Grid Search
+grid = GridSearchCV(
+    estimator=pipeline,
+    param_grid=param_grid,
+    scoring="f1_weighted",
+    cv=cv.split(X, y, groups),  # <<< Proper subject-level CV
+    verbose=2,
+    n_jobs=-1
+)
