@@ -17,45 +17,70 @@ import numpy as np
 X = np.load("lstm_selected_features.npy")  # shape: (N, 32 or 64) | Optimize this path and adjust it based on your own path for selected features after the hybrid EEGNet-LSTM models
 y = np.load("lstm_labels.npy")             # shape: (N,) | Optimize this path and adjust it based on your own path for labels (as another input for the model)
 
-# Define pipeline with scaling and SVM
-pipeline = Pipeline([
-    ("scaler", StandardScaler()),
-    ("svm", SVC(kernel="rbf", class_weight="balanced"))
-])
-
-# Define hyperparameter grid
-param_grid = {
-    "svm__C": [0.1, 1, 10, 100],
-    "svm__gamma": [0.001, 0.01, 0.1, 1]
-}
-
-# Use Stratified 5-Fold CV
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-# Grid search
-grid = GridSearchCV(
-    estimator=pipeline,
-    param_grid=param_grid,
-    scoring="f1_weighted",
-    cv=cv,
-    verbose=2,
-    n_jobs=-1
-)
+accuracies = []
+precisions = []
+recalls = []
+f1s = []
+all_y_true = []
+all_y_pred = []
 
-grid.fit(X, y)
+for fold, (train_idx, test_idx) in enumerate(cv.split(X, y), 1):
+    print(f"\n--- Fold {fold} ---")
 
-# Print best parameters and result
-print("\n=== Best Parameters ===")
-print(grid.best_params_)
+    # Split and scale
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
 
-print("\n=== Best Weighted F1-Score ===")
-print(grid.best_score_)
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
-# Predict on full data
-y_pred = grid.predict(X)
+    # Tuned SVM
+    clf = SVC(kernel='rbf', C=100, gamma=0.01, class_weight='balanced', random_state=42)
+    clf.fit(X_train_scaled, y_train)
 
-print("\n=== Classification Report (Full Data) ===")
-print(classification_report(y, y_pred))
+    y_pred = clf.predict(X_test_scaled)
 
-# confusion matrix
-ConfusionMatrixDisplay.from_predictions(y, y_pred, display_labels=["Healthy", "PD"])
+    # Metrics
+    acc = accuracy_score(y_test, y_pred)
+    prec = precision_score(y_test, y_pred)
+    rec = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+
+    accuracies.append(acc)
+    precisions.append(prec)
+    recalls.append(rec)
+    f1s.append(f1)
+    all_y_true.extend(y_test)
+    all_y_pred.extend(y_pred)
+
+    print(f"Accuracy:  {acc:.4f}")
+    print(f"Precision: {prec:.4f}")
+    print(f"Recall:    {rec:.4f}")
+    print(f"F1-score:  {f1:.4f}")
+
+# Summary
+print("\n=== Cross-validation Summary ===")
+print(f"Mean Accuracy:     {np.mean(accuracies):.4f} ± {np.std(accuracies):.4f}")
+print(f"Mean Precision:    {np.mean(precisions):.4f}")
+print(f"Mean Recall:       {np.mean(recalls):.4f}")
+print(f"Mean F1-score:     {np.mean(f1s):.4f}")
+
+# === Sensitivity Calculation ===
+# Confusion matrix: rows = true labels, columns = predicted labels
+cm = confusion_matrix(all_y_true, all_y_pred)
+TN, FP, FN, TP = cm.ravel()
+sensitivity = TP / (TP + FN)
+specificity = TN / (TN + FP)
+
+print(f"\n=== Sensitivity (TP / (TP + FN)) ===")
+print(f"Sensitivity:        {sensitivity:.4f}")
+
+print(f"\n=== Specificity (TN / (TN + FP)) ===")
+print(f"SPecificity:        {specificity:.4f}")
+
+# Classification report
+print("\n=== Full Classification Report ===")
+print(classification_report(all_y_true, all_y_pred))
