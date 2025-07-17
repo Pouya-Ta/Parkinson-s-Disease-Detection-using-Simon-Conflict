@@ -57,3 +57,5 @@ print(classification_report(y, y_pred))
 
 # Confusion Matrix
 ConfusionMatrixDisplay.from_predictions(y, y_pred, display_labels=["Healthy", "PD"])
+
+
