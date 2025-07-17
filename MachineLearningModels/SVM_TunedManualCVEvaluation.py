@@ -42,3 +42,11 @@ grid = GridSearchCV(
 )
 
 grid.fit(X, y)
+
+# Print best parameters and result
+print("\n=== Best Parameters ===")
+print(grid.best_params_)
+
+print("\n=== Best Weighted F1-Score ===")
+print(grid.best_score_)
+
