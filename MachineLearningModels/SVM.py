@@ -39,3 +39,12 @@ grid = GridSearchCV(
     verbose=2,
     n_jobs=-1
 )
+
+grid.fit(X, y)
+
+# Results
+print("\n=== Best Parameters ===")
+print(grid.best_params_)
+
+print("\n=== Best Weighted F1-Score ===")
+print(grid.best_score_)
