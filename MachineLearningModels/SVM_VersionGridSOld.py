@@ -15,3 +15,14 @@ from sklearn.metrics import classification_report, confusion_matrix
 X = np.load("lstm_selected_features.npy")  # shape: (N, 32 or 64) | Optimize this path and adjust it based on your own path for selected features after the hybrid EEGNet-LSTM models
 y = np.load("lstm_labels.npy")             # shape: (N,) | Optimize this path and adjust it based on your own path for labels (as another input for the model)
 
+# Define pipeline with scaling and SVM
+pipeline = Pipeline([
+    ("scaler", StandardScaler()),
+    ("svm", SVC(kernel="rbf", class_weight="balanced"))
+])
+
+# Define hyperparameter grid
+param_grid = {
+    "svm__C": [0.1, 1, 10, 100],
+    "svm__gamma": [0.001, 0.01, 0.1, 1]
+}
