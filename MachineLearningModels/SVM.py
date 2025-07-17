@@ -12,5 +12,5 @@ from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 
 # Load Data
 X = np.load("lstm_selected_features.npy")  # shape: (N, 32 or 64) | Optimize this path and adjust it based on your own path for selected features after the hybrid EEGNet-LSTM models
-y = np.load("/content/drive/MyDrive/ParkinsonClassifier/lstm_labels.npy")             # shape: (N,)
-groups = np.load("/content/drive/MyDrive/ParkinsonClassifier/lstm_groups.npy")        # shape: (N,)
+y = np.load("lstm_labels.npy")             # shape: (N,) | Optimize this path and adjust it based on your own path for labels (as another input for the model)
+groups = np.load("lstm_groups.npy")        # shape: (N,)
