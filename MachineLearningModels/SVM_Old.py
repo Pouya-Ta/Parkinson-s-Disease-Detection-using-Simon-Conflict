@@ -16,12 +16,12 @@ X = np.load("lstm_selected_features.npy")  # shape: (N, 32 or 64) | Optimize thi
 y = np.load("lstm_labels.npy")             # shape: (N,) | Optimize this path and adjust it based on your own path for labels (as another input for the model)
 groups = np.load("lstm_groups.npy")        # shape: (N,)
 
-# === Setup CV ===
+# Setup CV
 cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
 accs, precs, recs, f1s = [], [], [], []
 all_y_true, all_y_pred = [], []
 
-# === SVM Loop ===
+# SVM Loop
 for fold, (train_idx, test_idx) in enumerate(cv.split(X, y, groups), 1):
     print(f"\n--- Fold {fold} ---")
     X_train, X_test = X[train_idx], X[test_idx]
