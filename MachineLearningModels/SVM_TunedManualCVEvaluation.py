@@ -5,6 +5,7 @@ drive.mount('/content/drive')
 """
 
 from sklearn.svm import SVC
+from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import (
@@ -50,3 +51,11 @@ print(grid.best_params_)
 print("\n=== Best Weighted F1-Score ===")
 print(grid.best_score_)
 
+# Predict on full data
+y_pred = grid.predict(X)
+
+print("\n=== Classification Report (Full Data) ===")
+print(classification_report(y, y_pred))
+
+# confusion matrix
+ConfusionMatrixDisplay.from_predictions(y, y_pred, display_labels=["Healthy", "PD"])
