@@ -42,3 +42,19 @@ grid = GridSearchCV(
 
 grid.fit(X, y)
 
+# Print best parameters and result
+print("\n=== Best Parameters ===")
+print(grid.best_params_)
+
+print("\n=== Best Weighted F1-Score ===")
+print(grid.best_score_)
+
+# Predict on full data (just to inspect)
+y_pred = grid.predict(X)
+
+print("\n=== Classification Report (Full Data) ===")
+print(classification_report(y, y_pred))
+
+# Optional: confusion matrix
+from sklearn.metrics import ConfusionMatrixDisplay
+ConfusionMatrixDisplay.from_predictions(y, y_pred, display_labels=["Healthy", "PD"])
