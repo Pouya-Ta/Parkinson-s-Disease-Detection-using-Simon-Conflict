@@ -26,3 +26,19 @@ param_grid = {
     "svm__C": [0.1, 1, 10, 100],
     "svm__gamma": [0.001, 0.01, 0.1, 1]
 }
+
+# Use Stratified 5-Fold CV
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+# Grid search
+grid = GridSearchCV(
+    estimator=pipeline,
+    param_grid=param_grid,
+    scoring="f1_weighted",
+    cv=cv,
+    verbose=2,
+    n_jobs=-1
+)
+
+grid.fit(X, y)
+
