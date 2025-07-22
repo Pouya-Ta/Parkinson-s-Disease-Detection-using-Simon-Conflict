@@ -152,7 +152,7 @@ If you use this work, please cite:
 
 ```bibtex
 @article{Taghipour2025,
-  author = {Taghipour Langrodi, Pouya and Ahadzadeh, Mohammad and Khodadadi, Amirsadra and Rostami, Mostafa and Modaresi, Ali Sadat and Madadi, Sadegh},
+  author = {Pouya Taghipour Langrodi, Amirsadra Khodadadi, Ali Sadat Modaresi, Mohammad Ahadzadeh, Mostafa Rostami, and Sadegh Madadi},
   title = {Parkinson’s Disease Classification Using EEG and a Hybrid EEGNet–LSTM Architecture},
   year = {2025},
   institution = {Amirkabir University of Technology, BioMechatronic Lab},
